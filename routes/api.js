@@ -1,7 +1,7 @@
 const express = require("express");
-const authRouter = require("./api/auth");
+const authRouter = require("./api/users");
 const router = express.Router();
-const cardRouter = require("./api/card");
+const cardRouter = require("./api/cards");
 
 router.get("/", (req, res) => {
   res.json({ msg: "sub router" });
@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
 
 
 
-router.use("/card", cardRouter);
-router.use("/auth", authRouter);
+router.use("/cards", cardRouter);
+router.use("/users", authRouter);
 
 module.exports = router;

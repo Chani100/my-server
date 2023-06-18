@@ -6,8 +6,9 @@ const authMiddleware = async (req, res, next) => {
     if (!req.headers["x-auth-token"])
       throw new CustomError("please provide token");
     const userData = await verifyToken(req.headers["x-auth-token"]);
-    req.userData = userData;
-    next();
+   req.userData = userData;
+   next(); 
+   
   } catch (err) {
     let errToSend;
     if (err instanceof CustomError) {
