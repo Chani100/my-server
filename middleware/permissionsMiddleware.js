@@ -1,16 +1,15 @@
- const CustomError = require("../utils/CustomError");
+const CustomError = require("../utils/CustomError");
 const { getCardById } = require("../model/cards/cardService");
 const { validateIdSchema } = require("../validation/joi/idValidation");
 
- const checkIfOwner = async (iduser, idcard, res,  next) => {
+const checkIfOwner = async (iduser, idcard, res, next) => {
   try {
-    
-    await validateIdSchema(req.params.id); 
+    await validateIdSchema(idcard);
     const cardData = await getCardById(idcard);
     if (!cardData) {
       return res.status(400).json({ msg: "card not found" });
     }
-      
+
     if (cardData.user_id == iduser) {
       next();
     } else {
@@ -20,29 +19,27 @@ const { validateIdSchema } = require("../validation/joi/idValidation");
     console.log("err", err);
     res.status(400).json(err);
   }
-};  
+};
 
- const permissionsMiddleware = (isBiz, isAdmin, isOwner) => {
+const permissionsMiddleware = (isBiz, isAdmin, isOwner) => {
   return (req, res, next) => {
     if (!req.userData) {
       throw new CustomError("must provide userData");
     }
-   
+
     if (isBiz === req.userData.isBusiness && isBiz === true) {
       return next();
     }
     if (isAdmin === req.userData.isAdmin && isAdmin === true) {
       return next();
     }
-    
-     if (isOwner === true) {
-    checkIfOwner(req.userData._id, req.params.id, res, next); 
-    }  
-;
 
-    res.status(401).json({ msg: "Access to authorized persons only" });
+    if (isOwner === true) {
+      checkIfOwner(req.userData._id, req.params.id, res, next);
+    } else {
+      res.status(401).json({ msg: "Access to authorized persons only" });
+    }
   };
 };
 
-module.exports = permissionsMiddleware;  
-
+module.exports = permissionsMiddleware;

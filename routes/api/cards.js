@@ -91,9 +91,11 @@ router.put(
       await validateIdSchema(req.params.id);
       await normaliztionCard(req.body, req.userData._id);
       const cardFromDB = await cardsServiceModel.getCardById(req.params.id);
-      if (req.body.bizNumber !== cardFromDB.bizNumber) {
+      console.log(cardFromDB.bizNumber);
+      console.log(req.body.bizNumber);
+     if (req.body.bizNumber !== cardFromDB.bizNumber) {
         return res.status(400).json({ message: "Cannot update bizNumber" });
-      }
+      } 
 
       delete req.body.bizNumber;
       const updatedCard = await cardsServiceModel.updateCard(
@@ -176,13 +178,11 @@ router.patch(
       const cards = await cardsServiceModel.getAllCards();
       const bizNumbers = cards.map((card) => card.bizNumber);
 
-      
-
       const updateCardBiz = await cardsServiceModel.updateCardBiz(
         req.params.bizNumber,
         req.body.bizNumber
       );
-      
+
       if (!updateCardBiz) {
         console.log(updateCardBiz);
         throw new CustomError("Card does not exist!");

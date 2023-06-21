@@ -20,11 +20,12 @@ router.post("/", async (req, res) => {
     await registerUserValidation(req.body);
     req.body.password = await hashService.generateHash(req.body.password);
     req.body = normalizeUser(req.body);
-    const userData = await usersServiceModel.getUserByEmail(req.body.email);
-    if (userData.email) throw new CustomError("invalid email ");
+    const userData = await usersServiceModel.getUserByEmail(req.body.email); 
+     if (userData) throw new CustomError("invalid email ");
     await usersServiceModel.registerUser(req.body);
     res.json({ msg: "register" });
   } catch (err) {
+    console.log("err", err);
     res.status(400).json(err);
   }
 });
