@@ -46,7 +46,7 @@ const registerSchema = Joi.object({
         "string.pattern.base":
           "The address must start with http// and contain letters and numbers",
       }),
-    alt: Joi.string().min(2).max(256).required(),
+    alt: Joi.string().min(2).max(256)
   }),
   address: Joi.object()
     .keys({

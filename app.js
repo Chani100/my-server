@@ -9,7 +9,10 @@ const initialData = require("./initialeData/initialData");
 const chalk = require("chalk");
 const logger = require("./chalkLogger");
 const app = express();
-app.use(cors());
+app.use(
+  cors()
+);
+
 /* ("common") */
 app.use(logger);
 
