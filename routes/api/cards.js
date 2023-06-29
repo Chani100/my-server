@@ -165,7 +165,7 @@ router.delete(
 //Bonus
 //admin
 //localhost:8181/api/cards/bizNumber
-//put
+//patch
 
 router.patch(
   "/bizNum/:bizNumber",
