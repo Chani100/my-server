@@ -18,7 +18,7 @@ const permissionsMiddlewareUser = (isAdmin, isOwner) => {
     }
     res
       .status(401)
-      .json({ msg: "you not allowed to edit this user usermiddleware" });
+      .json({ msg: "You are not authorized to access this request" });
   };
 };
 
