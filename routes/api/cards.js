@@ -93,9 +93,9 @@ router.put(
       const cardFromDB = await cardsServiceModel.getCardById(req.params.id);
       console.log(cardFromDB.bizNumber);
       console.log(req.body.bizNumber);
-     if (req.body.bizNumber !== cardFromDB.bizNumber) {
+      if (req.body.bizNumber !== cardFromDB.bizNumber) {
         return res.status(400).json({ message: "Cannot update bizNumber" });
-      } 
+      }
 
       delete req.body.bizNumber;
       const updatedCard = await cardsServiceModel.updateCard(
@@ -184,15 +184,21 @@ router.patch(
       );
 
       if (!updateCardBiz) {
-        console.log(updateCardBiz);
         throw new CustomError("Card does not exist!");
       }
-      if (bizNumbers.includes(req.body.bizNumber)) {
+
+      let bizNumber = req.body.bizNumber;
+      if (parseInt(bizNumber) > 0) {
+        bizNumber = parseInt(bizNumber)
+      }
+      if (bizNumbers.includes(bizNumber)) {
         throw new CustomError("The number is occupied by another card!");
       }
+
+      console.log(bizNumbers);
+      console.log(req.body.bizNumber);
       res.json(updateCardBiz);
     } catch (err) {
-      console.log("err", err);
       res.status(400).json(err);
     }
   }
