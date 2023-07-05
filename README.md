@@ -41,7 +41,7 @@ And if there are no login errors you should see the message painted in cyan:
 
 #### Register a new user
 
-POST /http://localhost:8181/api/auth/users
+POST /http://localhost:8181/api/users
 
 request:
 
@@ -117,7 +117,7 @@ request:
   
 #### Login a user
 
-POST /http://localhost:8181/api/auth/users/login
+POST /http://localhost:8181/api/users/login
 
 request:
 
@@ -135,14 +135,14 @@ request:
 
  #### Get all users
 
- GET /http://localhost:8181/api/auth/users
+ GET /http://localhost:8181/api/users
 
  - must provide token
   \*\* must be registered as admin
 
   #### For Information about a user
 
-  GET /http://localhost:8181/api/auth/users/:id
+  GET /http://localhost:8181/api/users/:id
 
 equest:
 
@@ -152,7 +152,7 @@ equest:
 You will need to provide a token to get an answer from this api
 
 #### For User information update/edit
- PUT /http://localhost:8181/api/auth/users/:id
+ PUT /http://localhost:8181/api/users/:id
 
 
  request:
@@ -230,11 +230,11 @@ or You need to be admin
 
 ### Change isBusiness status
 
- PATCH /http://localhost:8181/api/auth/users/:id
+ PATCH /http://localhost:8181/api/users/:id
 
  must provide token
 ### Delete user
- DELETE /http://localhost:8181/api/auth/users/:id
+ DELETE /http://localhost:8181/api/users/:id
 
  - must provide token
   \*\* must be registered as admin
@@ -397,6 +397,18 @@ request:
 
   DELETE / http://localhost:8181/api/cards/:id
 
+### change bizNumber
+
+  PATCH /http://localhost:8181/api/cards/bizNum/:bizNumber
+  request:
+
+- must provide token
+  \*\* must registered as admin user
+
+  //bizNumber:
+  -- number
+  -- min 0000001
+  -- max 9999999
 
 - must provide token
   \*\* must registered as biz user or admin user

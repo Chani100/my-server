@@ -20,7 +20,6 @@ router.get("/", async (req, res) => {
     const allCards = await cardsServiceModel.getAllCards();
     res.json(allCards);
   } catch (err) {
-    console.log("err", err);
     res.status(400).json(err);
   }
 });
@@ -91,8 +90,6 @@ router.put(
       await validateIdSchema(req.params.id);
       await normaliztionCard(req.body, req.userData._id);
       const cardFromDB = await cardsServiceModel.getCardById(req.params.id);
-      console.log(cardFromDB.bizNumber);
-      console.log(req.body.bizNumber);
       if (req.body.bizNumber !== cardFromDB.bizNumber) {
         return res.status(400).json({ message: "Cannot update bizNumber" });
       }
@@ -105,7 +102,6 @@ router.put(
 
       res.json(updatedCard);
     } catch (err) {
-      console.log("err", err);
       res.status(400).json(err);
     }
   }
@@ -133,7 +129,6 @@ router.patch("/like/:id", authmw, async (req, res) => {
       res.json({ msg: "The card has been removed from the favorites list." });
     }
   } catch (err) {
-    console.log("err", err);
     res.status(400).json(err);
   }
 });
@@ -156,7 +151,6 @@ router.delete(
         res.json({ mgs: "cold not find the card" });
       }
     } catch (err) {
-      console.log("err", err);
       res.status(400).json(err);
     }
   }
@@ -164,7 +158,7 @@ router.delete(
 
 //Bonus
 //admin
-//localhost:8181/api/cards/bizNumber
+//localhost:8181/api/cards/bizNum:bizNumber
 //patch
 
 router.patch(
